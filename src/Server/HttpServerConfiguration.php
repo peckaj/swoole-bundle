@@ -27,6 +27,7 @@ class HttpServerConfiguration
     private const SWOOLE_HTTP_SERVER_CONFIG_PACKAGE_MAX_LENGTH = 'package_max_length';
     private const SWOOLE_HTTP_SERVER_CONFIG_WORKER_MAX_REQUEST = 'worker_max_request';
     private const SWOOLE_HTTP_SERVER_CONFIG_WORKER_MAX_REQUEST_GRACE = 'worker_max_request_grace';
+    private const SWOOLE_HTTP_SERVER_CONFIG_DISPATCH_MODE = 'dispatch_mode';
 
     /**
      * @todo add more
@@ -48,6 +49,7 @@ class HttpServerConfiguration
         self::SWOOLE_HTTP_SERVER_CONFIG_TASK_WORKER_COUNT => 'task_worker_num',
         self::SWOOLE_HTTP_SERVER_CONFIG_WORKER_MAX_REQUEST => 'max_request',
         self::SWOOLE_HTTP_SERVER_CONFIG_WORKER_MAX_REQUEST_GRACE => 'max_request_grace',
+        self::SWOOLE_HTTP_SERVER_CONFIG_DISPATCH_MODE => 'dispatch_mode',
     ];
 
     private const SWOOLE_SERVE_STATIC = [
@@ -129,6 +131,14 @@ class HttpServerConfiguration
     public function changeServerSocket(Socket $socket): void
     {
         $this->sockets->changeServerSocket($socket);
+    }
+
+    /**
+     * @see getSwooleSettings()
+     */
+    public function getSwooleDispatchMode(): int
+    {
+        return $this->settings[self::SWOOLE_HTTP_SERVER_CONFIG_DISPATCH_MODE] ?? 3;
     }
 
     public function getSockets(): Sockets
