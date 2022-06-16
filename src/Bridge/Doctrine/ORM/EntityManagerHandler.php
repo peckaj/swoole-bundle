@@ -27,13 +27,9 @@ final class EntityManagerHandler implements RequestHandlerInterface
      */
     public function handle(Request $request, Response $response): void
     {
-        if (!$this->connection->ping()) {
-            $this->connection->close();
-            $this->connection->connect();
-        }
-
         $this->decorated->handle($request, $response);
 
+        $this->connection->close();
         $this->entityManager->clear();
     }
 }
